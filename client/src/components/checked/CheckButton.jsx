@@ -1,9 +1,14 @@
 import './CheckButton.css'
+import PropTypes from 'prop-types'
 
-const CheckButton = () => {
+const CheckButton = (props) => {
 	return (
-		<input className="checkbox" type="checkbox"/>
+		<input onChange={(e) => props.setChecked(e.target.checked)} className="checkbox" type="checkbox"/>
 	)
+}
+
+CheckButton.propTypes = {
+	setChecked: PropTypes.func
 }
 
 export default CheckButton

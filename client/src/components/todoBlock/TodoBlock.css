@@ -9,13 +9,17 @@
 }
 
 
-.todo-block div {
+.todo-block-text {
 	color: white;
 	font-size: 18px;
 	display: block;
 	margin: auto 0px ;
 	text-align: start;
 	width: 80%;
+}
+
+.line-through {
+	text-decoration: line-through black;
 }
 
 .button-delete {

@@ -11,9 +11,8 @@ function App() {
       id: todo.length > 0 ? todo[todo.length - 1].id + 1 : 0,
       text: text
     }
-    setTodo([...todo, newTodo])
+    setTodo([newTodo, ...todo])
     setText("")
-    console.log(todo, newTodo)
   }
 
   const deleteTodo = (todoId) => {
