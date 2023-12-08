@@ -7,14 +7,14 @@ import CheckButton from '../checked/CheckButton'
 const TodoBlock = (prop) => {
 
 	const setTodoComplete = (isChecked) => {
-		prop.setTodoComplete(isChecked, prop.todo.id)
+		prop.setTodoComplete(isChecked, prop.todo.Id)
 	}
 
 	return (
 		<div className="todo-block">
-			<CheckButton setChecked={setTodoComplete} isChecked={prop.todo.isComplete}/>
-			<div className={`todo-block-text ${prop.todo.isComplete ? "line-through" : ""}`}>{prop.todo.text}</div>
-			<img onClick={() => prop.deleteTodo(prop.todo.id)} src={logo} alt="" width={45}/>
+			<CheckButton setChecked={setTodoComplete} isChecked={prop.todo.IsComplete}/>
+			<div className={`todo-block-text ${prop.todo.IsComplete ? "line-through" : ""}`}>{prop.todo.Text}</div>
+			<img onClick={() => prop.deleteTodo(prop.todo.Id)} src={logo} alt="" width={45}/>
 		</div>
 	)
 }

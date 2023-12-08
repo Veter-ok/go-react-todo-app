@@ -2,17 +2,25 @@ import {useState} from "react"
 import './App.css'
 import TodoBlock from "./components/todoBlock/TodoBlock"
 import {compareTodo} from './utils/sortTodo'
-// import { useEffect } from "react"
+import { useEffect } from "react"
 
 function App() {
   const [text, setText] = useState("")
   const [todo, setTodo] = useState([])
 
+  useEffect(() => {
+    fetch("http://localhost:8080/foo")
+      .then(res => res.json())
+      .then((res) => {
+        setTodo(res)
+    })
+  }, [])
+
   const setTodoComplete = (isComplete, id) => {
     let newTodoList = [...todo]
     for(let i = 0; i < newTodoList.length; i++){
-      if (newTodoList[i].id === id){
-        newTodoList[i].isComplete = isComplete
+      if (newTodoList[i].Id === id){
+        newTodoList[i].IsComplete = isComplete
       }
     }
     newTodoList = newTodoList.sort(compareTodo)
@@ -22,21 +30,21 @@ function App() {
   const addNewTodo = () => {
     let maxIndex = 0
     for(let i = 0; i < todo.length; i++){
-      if (todo[i].id > maxIndex){
-        maxIndex = todo[i].id
+      if (todo[i].Id > maxIndex){
+        maxIndex = todo[i].Id
       }
     }
     const newTodo = {
-      id: todo.length === 0 ? 0: maxIndex+ 1,
-      isComplete: false,
-      text: text
+      Id: todo.length === 0 ? 0: maxIndex+ 1,
+      IsComplete: false,
+      Text: text
     }
     setTodo([newTodo, ...todo])
     setText("")
   }
 
   const deleteTodo = (todoId) => {
-    const newTodoList = todo.filter((value) => value.id !== todoId)
+    const newTodoList = todo.filter((value) => value.Id !== todoId)
     setTodo(newTodoList)
   }
 
