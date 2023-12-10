@@ -2,11 +2,13 @@ import {useState} from "react"
 import './App.css'
 import TodoBlock from "./components/todoBlock/TodoBlock"
 import {compareTodo} from './utils/sortTodo'
+import {searchTodoAndSetComplete} from './utils/searchTodo'
 import { useEffect } from "react"
 
 function App() {
   const [text, setText] = useState("")
   const [todo, setTodo] = useState([])
+  const [sortedTodo, setSortedTodo] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:8080/foo")
@@ -14,16 +16,13 @@ function App() {
       .then((res) => {
         setTodo(res)
     })
-  }, [])
+    setSortedTodo(todo)
+    sortTodo()
+  }, [todo])
 
   const setTodoComplete = (isComplete, id) => {
     let newTodoList = [...todo]
-    for(let i = 0; i < newTodoList.length; i++){
-      if (newTodoList[i].Id === id){
-        newTodoList[i].IsComplete = isComplete
-      }
-    }
-    newTodoList = newTodoList.sort(compareTodo)
+    newTodoList = searchTodoAndSetComplete(newTodoList, id, isComplete)
     setTodo(newTodoList)
   }
 
@@ -43,6 +42,12 @@ function App() {
     setText("")
   }
 
+  const sortTodo = () => {
+    let newTodoList = [...todo]
+    newTodoList = newTodoList.sort(compareTodo)
+    setSortedTodo(newTodoList)
+  }
+
   const deleteTodo = (todoId) => {
     const newTodoList = todo.filter((value) => value.Id !== todoId)
     setTodo(newTodoList)
@@ -60,7 +65,7 @@ function App() {
         <button className="button-add" onClick={addNewTodo}>Add</button>
       </div>
       <div className="todos">
-        {todo.map((value, index) => 
+        {sortedTodo.map((value, index) => 
             <TodoBlock key={index} todo={value} deleteTodo={deleteTodo} setTodoComplete={setTodoComplete}/>
         )}
       </div>
